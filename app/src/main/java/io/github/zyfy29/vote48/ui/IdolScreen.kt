@@ -30,14 +30,6 @@ import io.github.zyfy29.vote48.schema.IdolUiState
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun IdolScreen(uiState: IdolUiState, onRefresh: () -> Unit) {
-//    val snackbarHostState = remember { SnackbarHostState() }
-//
-//    if (!uiState.errorMessage.isNullOrEmpty()) {
-//        LaunchedEffect(uiState.errorMessage) {
-//            snackbarHostState.showSnackbar(uiState.errorMessage)
-//        }
-//    }
-
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
@@ -60,6 +52,19 @@ fun IdolScreen(uiState: IdolUiState, onRefresh: () -> Unit) {
                 contentAlignment = Alignment.Center
             ) {
                 CircularProgressIndicator()
+            }
+            return@Scaffold
+        }
+
+        if (uiState.errorMessage != null) {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = uiState.errorMessage,
+                    modifier = Modifier.padding(24.dp),
+                )
             }
             return@Scaffold
         }
@@ -110,4 +115,13 @@ fun IdolScreenPreview() {
 @Composable
 fun IdolScreenPreviewLoading() {
     IdolScreen(uiState = IdolUiState(isLoading = true), onRefresh = {})
+}
+
+@Preview(showBackground = true)
+@Composable
+fun IdolScreenPreviewError() {
+    IdolScreen(
+        uiState = IdolUiState(errorMessage = "I am an error message"),
+        onRefresh = {}
+    )
 }
