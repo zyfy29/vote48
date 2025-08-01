@@ -5,11 +5,11 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class IdolItem(
-    @SerialName("cy_id") val cyId: String,
-    @SerialName("nickname") val nickname: String,
-    @SerialName("vote") val vote: String,
-    @SerialName("gname") val gname: String,
-    @SerialName("tname") val tname: String,
-    @SerialName("rank") val rank: String,
-    @SerialName("color") val color: String?
+    @SerialName("cy_id") val cyId: String = "",
+    @SerialName("nickname") val nickname: String = "",
+    @SerialName("vote") val vote: String = "",
+    @SerialName("gname") val gname: String = "",
+    @SerialName("tname") val tname: String = "",
+    @SerialName("rank") val rank: String = "",
+    @SerialName("color") val color: String? = null
 )

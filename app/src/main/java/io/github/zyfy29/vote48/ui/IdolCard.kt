@@ -26,7 +26,7 @@ import androidx.core.graphics.toColorInt
 import io.github.zyfy29.vote48.schema.IdolItem
 
 @Composable
-fun IdolCard(idolItem: IdolItem) {
+fun IdolCard(idolItem: IdolItem, onViewDetail: (IdolItem) -> Unit) {
     Card(
         modifier = Modifier.fillMaxWidth(),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
@@ -88,7 +88,7 @@ fun IdolCard(idolItem: IdolItem) {
 
             // Detail button
             IconButton(
-                onClick = { /* TODO: 詳細画面への遷移 */ }
+                onClick = { onViewDetail(idolItem) }
             ) {
                 Icon(
                     imageVector = Icons.Default.ChevronRight,
@@ -112,7 +112,7 @@ fun IdolCardPreview() {
         rank = "1",
         color = "ea627c"
     )
-    IdolCard(idolItem = sampleIdol)
+    IdolCard(idolItem = sampleIdol, onViewDetail = {})
 }
 
 @Preview
@@ -127,5 +127,5 @@ fun IdolCardPreviewBorder() {
         rank = "111",
         color = "ea627c"
     )
-    IdolCard(idolItem = sampleIdol)
+    IdolCard(idolItem = sampleIdol, onViewDetail = {})
 }

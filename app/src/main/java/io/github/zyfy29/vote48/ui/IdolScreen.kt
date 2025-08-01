@@ -25,11 +25,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.github.zyfy29.vote48.schema.IdolItem
-import io.github.zyfy29.vote48.schema.IdolUiState
+import io.github.zyfy29.vote48.state.IdolUiState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun IdolScreen(uiState: IdolUiState, onRefresh: () -> Unit) {
+fun IdolScreen(
+    uiState: IdolUiState,
+    onRefresh: () -> Unit,
+    onViewDetail: (IdolItem) -> Unit,
+) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
@@ -77,8 +81,7 @@ fun IdolScreen(uiState: IdolUiState, onRefresh: () -> Unit) {
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             items(uiState.idols) { idol ->
-                Log.d("IdolScreen", "Rendering idol: ${idol.nickname}")
-                IdolCard(idolItem = idol)
+                IdolCard(idolItem = idol, onViewDetail = onViewDetail)
             }
         }
     }
@@ -107,14 +110,17 @@ fun IdolScreenPreview() {
             color = "ae86bb"
         )
     )
-    IdolScreen(uiState = IdolUiState(idols = sampleIdols), onRefresh = {})
+    IdolScreen(uiState = IdolUiState(idols = sampleIdols), onRefresh = {}, onViewDetail = {})
 }
 
 
 @Preview(showBackground = true)
 @Composable
 fun IdolScreenPreviewLoading() {
-    IdolScreen(uiState = IdolUiState(isLoading = true), onRefresh = {})
+    IdolScreen(
+        uiState = IdolUiState(isLoading = true),
+        onRefresh = {},
+        onViewDetail = {})
 }
 
 @Preview(showBackground = true)
@@ -122,6 +128,7 @@ fun IdolScreenPreviewLoading() {
 fun IdolScreenPreviewError() {
     IdolScreen(
         uiState = IdolUiState(errorMessage = "I am an error message"),
-        onRefresh = {}
+        onRefresh = {},
+        onViewDetail = {}
     )
 }
