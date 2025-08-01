@@ -46,7 +46,7 @@ fun FanIdolCard(rank: Int, fanIdolItem: FanIdolItem) {
                 val voteDouble = fanIdolItem.vote.toDouble()
                 if (voteDouble % 1 == 0.0) {
                     // 整数ならそのまま表示
-                    fanIdolItem.vote
+                    String.format("%d", voteDouble.toInt())
                 } else {
                     // 小数なら1桁まで四捨五入して表示
                     String.format("%.1f", voteDouble)
@@ -72,7 +72,7 @@ fun PreviewFanIdolCard() {
         rank = 1,
         fanIdolItem = FanIdolItem(
             idolName = "山田花子",
-            vote = "100"
+            vote = "100.00"
         )
     )
 }
