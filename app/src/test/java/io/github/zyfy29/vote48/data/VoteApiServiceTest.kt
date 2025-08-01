@@ -10,5 +10,11 @@ class VoteApiServiceTest {
         println(response)
 //        assertThat(response.error, org.hamcrest.CoreMatchers.nullValue<String>())
     }
+
+    @Test
+    fun testFanIdolApi() = runTest {
+        val response = VoteApiClient.apiService.getFanIdolList("106234391")
+        println(response)
+    }
 }
 

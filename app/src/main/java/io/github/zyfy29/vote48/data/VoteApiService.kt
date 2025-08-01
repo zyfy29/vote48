@@ -1,5 +1,6 @@
 package io.github.zyfy29.vote48.data
 
+import io.github.zyfy29.vote48.schema.FanIdolData
 import io.github.zyfy29.vote48.schema.Response
 import io.github.zyfy29.vote48.schema.IdolData
 import io.github.zyfy29.vote48.schema.IdolFanData
@@ -22,4 +23,10 @@ interface VoteApiService {
     suspend fun getIdolFanList(
         @Field("user_id") userId: String,
     ): Response<IdolFanData>
+
+    @FormUrlEncoded
+    @POST("/Api/voterange")
+    suspend fun getFanIdolList(
+        @Field("user_id") userId: String,
+    ): Response<FanIdolData>
 }
