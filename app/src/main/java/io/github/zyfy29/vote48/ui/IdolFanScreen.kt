@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Refresh
@@ -28,7 +27,11 @@ import io.github.zyfy29.vote48.state.IdolFanUiState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun IdolFanScreen(uiState: IdolFanUiState, onRefresh: () -> Unit) {
+fun IdolFanScreen(
+    uiState: IdolFanUiState,
+    onViewDetail: (IdolFanItem) -> Unit,
+    onRefresh: () -> Unit
+) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
@@ -76,8 +79,7 @@ fun IdolFanScreen(uiState: IdolFanUiState, onRefresh: () -> Unit) {
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             itemsIndexed(uiState.fans) { idx, fan ->
-                Log.d("IdolFanScreen", "Rendering fan: ${fan.userName}")
-                IdolFanCard(rank = idx + 1, idolFanItem = fan)
+                IdolFanCard(rank = idx + 1,onViewDetail = onViewDetail, idolFanItem = fan)
             }
         }
     }
@@ -103,13 +105,17 @@ fun IdolFanScreenPreview() {
             vote = "150.5"
         )
     )
-    IdolFanScreen(uiState = IdolFanUiState(idolItem = IdolItem(nickname = "アイドルA"), fans = sampleFans), onRefresh = {})
+    IdolFanScreen(uiState = IdolFanUiState(idolItem = IdolItem(nickname = "アイドルA"), fans = sampleFans),
+        onViewDetail = {},
+        onRefresh = {})
 }
 
 @Preview(showBackground = true)
 @Composable
 fun IdolFanScreenPreviewLoading() {
-    IdolFanScreen(uiState = IdolFanUiState(isLoading = true), onRefresh = {})
+    IdolFanScreen(uiState = IdolFanUiState(isLoading = true),
+        onViewDetail = {},
+        onRefresh = {})
 }
 
 @Preview(showBackground = true)
@@ -117,6 +123,7 @@ fun IdolFanScreenPreviewLoading() {
 fun IdolFanScreenPreviewError() {
     IdolFanScreen(
         uiState = IdolFanUiState(errorMessage = "ファンデータの読み込みに失敗しました"),
+        onViewDetail = {},
         onRefresh = {}
     )
 }

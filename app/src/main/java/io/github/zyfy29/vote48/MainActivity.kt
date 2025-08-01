@@ -37,6 +37,7 @@ fun MainNav() {
 
     val idolUiState by viewModel.idolUiState.collectAsState()
     val idolFanUiState by viewModel.idolFanUiState.collectAsState()
+    val fanIdolUiState by viewModel.fanIdolUiState.collectAsState()
 
     NavHost(
         navController = navController,
@@ -52,8 +53,15 @@ fun MainNav() {
         ) }
         composable("idol-fan") { IdolFanScreen(
             uiState = idolFanUiState,
-            onRefresh = {  }
+            onViewDetail = { idolFanItem ->
+                viewModel.fetchFanIdolList(idolFanItem)
+                navController.navigate("fan-idol")
+            },
+            onRefresh = { viewModel.fetchIdolFanList(idolFanUiState.idolItem) },
         ) }
-        composable("fan-idol") { FanIdolScreen() }
+        composable("fan-idol") { FanIdolScreen(
+            uiState = fanIdolUiState,
+            onRefresh = { viewModel.fetchFanIdolList(fanIdolUiState.fan) }
+        ) }
     }
 }
